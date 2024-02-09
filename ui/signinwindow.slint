@@ -1,0 +1,43 @@
+import { Button, VerticalBox, LineEdit, HorizontalBox, GridBox, StandardButton, Palette } from "std-widgets.slint";
+
+
+enum Page {
+    SignIn
+}
+
+export component SignInWindow inherits Window {
+    in-out property <string> response;
+    callback send-request(string, string);
+    in-out property <Page> page;
+    if page == Page.SignIn: VerticalBox {
+        GridLayout {
+            Row {
+                Text {
+                    text: "account: ";
+                }
+                account-input := LineEdit {
+                    placeholder-text: "input your email or username";
+                }
+            }
+            Row {
+                Text {
+                    text: "password: ";
+                }
+                password-input := LineEdit {
+                    placeholder-text: "input your password";
+                    input-type: password;
+
+                }
+            }
+        }
+        HorizontalBox {
+            Button {
+                text: "sign in";
+                enabled: account-input.text != "" && password-input.text != "";
+                clicked => {
+                    root.send-request(account-input.text, password-input.text);
+                }
+            }
+        }
+    }
+}

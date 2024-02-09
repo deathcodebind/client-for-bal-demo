@@ -1,0 +1,3 @@
+query signIn($account: String!, $password: String!) {
+    signIn(account: $account, password: $password)
+}
